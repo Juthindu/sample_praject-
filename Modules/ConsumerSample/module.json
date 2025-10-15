@@ -1,0 +1,13 @@
+{
+    "name": "ConsumerSample",
+    "alias": "consumersample",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ConsumerSample\\Providers\\ConsumerSampleServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

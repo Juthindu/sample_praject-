@@ -1,0 +1,13 @@
+{
+    "name": "OwnResourceSample",
+    "alias": "ownresourcesample",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\OwnResourceSample\\Providers\\OwnResourceSampleServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

@@ -1,0 +1,13 @@
+{
+    "name": "Chemical",
+    "alias": "chemical",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Chemical\\Providers\\ChemicalServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

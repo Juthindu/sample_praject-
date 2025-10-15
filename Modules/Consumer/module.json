@@ -1,0 +1,13 @@
+{
+    "name": "Consumer",
+    "alias": "consumer",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Consumer\\Providers\\ConsumerServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

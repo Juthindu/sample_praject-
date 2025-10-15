@@ -1,0 +1,83 @@
+.btn-primary {
+    color: #FFFFFF;
+    background-color: #6571FF;
+    border-color: #6571FF;
+}
+.search-box{
+    max-height: 300px;
+    background-color: #e8ecfd5c;
+    overflow-y: scroll;
+}
+.search-list{
+  list-style: none;   /* remove bullets */
+  margin: 0;
+  padding: 0;         /* kill left indent so hover can reach the edge */
+}
+
+/* each clickable row (a, li, or div) */
+.search-item{
+  display: block;         /* let it occupy the full row width */
+  width: 100%;
+  padding: 8px 12px;      /* optional: nicer hit area */
+  transition: background-color .2s ease;
+  box-sizing: border-box;
+}
+
+.search-item:hover{
+  background-color: #6571FF;   /* blue bar */
+  color: #fff;                 /* optional: readable text */
+}
+/* Wrapper */
+.qty{
+  display:inline-flex;
+  align-items:center;
+  gap:0;
+  border:1px solid #e5e7eb;         /* light gray */
+  border-radius:14px;
+  overflow:hidden;
+  background:#fff;
+  box-shadow: 0 6px 16px rgba(0,0,0,.06);
+}
+
+/* Buttons */
+.qty__btn{
+  appearance:none;
+  -webkit-appearance:none;
+  border:0;
+  width:40px;
+  height:40px;
+  font-size:22px;
+  line-height:1;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  background:#f3f4f6;               /* gray-100 */
+  transition:transform .05s ease, background .2s ease;
+  user-select:none;
+}
+.qty__btn:hover{ background:#e5e7eb; }     /* hover */
+.qty__btn:active{ transform:translateY(1px); }
+.qty__btn--minus{ border-right:1px solid #e5e7eb; }
+.qty__btn--plus{ border-left:1px solid #e5e7eb; }
+
+/* Number field */
+.qty__input{
+  width:70px;                        /* adjust as you like */
+  height:40px;
+  border:0;
+  text-align:center;
+  font:600 16px/1.2 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Inter,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+  background:#fff;
+  color:#111827;
+  outline:none;
+}
+.qty__input::-webkit-outer-spin-button,
+.qty__input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+/* Firefox */
+.qty__input[type=number]{ -moz-appearance:textfield; }
+
+/* Focus rings (accessibility) */
+.qty:focus-within{
+  box-shadow: 0 0 0 4px rgba(101,113,255,.15), 0 6px 16px rgba(0,0,0,.06);
+  border-color:#6571FF;
+}

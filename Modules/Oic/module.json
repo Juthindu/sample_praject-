@@ -1,0 +1,13 @@
+{
+    "name": "Oic",
+    "alias": "oic",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Oic\\Providers\\OicServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
