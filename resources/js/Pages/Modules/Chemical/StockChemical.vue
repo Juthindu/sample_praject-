@@ -10,7 +10,7 @@ const chemical_sample_table_columns = [
     { field: 'chemical_code', title: 'Chemical Code' },
     { field: 'quantity', title: 'Stock Quantity'},
     { field: 'scal_metionment', title: 'Measurement'},
-    { field: 'actions', title: 'Actions', cellRenderer: false, width: '50px' },
+    // { field: 'actions', title: 'Actions', cellRenderer: false, width: '50px' },
 ];
 onMounted(() => {
 

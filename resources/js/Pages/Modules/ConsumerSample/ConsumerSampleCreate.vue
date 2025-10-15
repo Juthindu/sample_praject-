@@ -15,9 +15,9 @@ const date = ref('');
 const selected_consumer_id = ref('');
 const transport = ref(0);
 const vat = ref(0);
-const laboratory_no = ref('');
+const laboratory_no = ref('Region LAB');
 const paid_amount = ref(0);
-const payment_status = ref("");
+const payment_status = ref("payment_status");
 
 // const total_payment_amount = ref(0);
 const formRef = ref(null);
@@ -540,24 +540,23 @@ async function handleSubmit() {
                                             <input type="text" class="form-control" id="laboratory_no" required
                                                 placeholder="Laboratory No" v-model="laboratory_no">
                                         </div>
-                                        <div class="col-md-6 mb-3">
+                                        <!-- <div class="col-md-6 mb-3">
                                             <label for="paid_amount">Total Payment
                                                 Amount</label>
                                             <input type="number" min="0" class="form-control" id="paid_amount" required
                                                 placeholder="Total Payment Amount" v-model.number="paid_amount"
                                                 name="paid_amount">
-                                        </div>
-                                        <div class="col-md-6 mb-3">
+                                        </div> -->
+                                        <!-- <div class="col-md-6 mb-3">
                                             <div class="form-group">
                                                 <label for="payment_status">Payment Status</label>
-                                                <select class="form-control" id="payment_status" required
+                                                <select class="form-control" id="payment_status" disabled 
                                                     v-model="payment_status">
-                                                    <option value="" selected>Select Payment Status</option>
+                                                    <option value="Unpaid" selected>Unpaid</option>
                                                     <option value="Paid">Paid</option>
-                                                    <option value="Unpaid">Unpaid</option>
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="row">
                                         <div class="col-4 mb-3">

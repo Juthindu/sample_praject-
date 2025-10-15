@@ -17,7 +17,7 @@ const oic_id = ref('');
 const districts = ref([]);
 const oic = ref([]);
 const tank_no = ref('');
-const laboratory_no = ref('');
+const laboratory_no = ref('Region LAB');
 
 // const total_payment_amount = ref(0);
 const formRef = ref(null);
@@ -177,7 +177,8 @@ async function handleSubmit() {
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a :href="route('own.resource.sample.index')">NWSDB Water Resource
+                            <li class="breadcrumb-item"><a :href="route('own.resource.sample.index')">NWSDB Water
+                                    Resource
                                     Sample</a>
                             </li>
                             <li class="breadcrumb-item active">Sample Create</li>
@@ -209,7 +210,7 @@ async function handleSubmit() {
                                                 <select class="form-control" v-model="region_id" required>
                                                     <option value="" disabled selected>Select Region</option>
                                                     <option v-for="region in regions" :key="region.id"
-                                                        :value="region.id" >
+                                                        :value="region.id">
                                                         {{ region.region_code + ' ' + region.region_name }}
                                                     </option>
                                                 </select>
@@ -239,9 +240,15 @@ async function handleSubmit() {
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label for="tank_no">Tack No</label>
-                                            <input type="text" class="form-control" id="tank_no" required
-                                                placeholder="Laboratory No" v-model="tank_no">
+                                            <label for="tank_no">Tank No</label>
+                                            <select class="form-control" id="tank_no" v-model="tank_no" required>
+                                                <option value="">Select Tank</option>
+                                                <option value="Tank One">Tank One</option>
+                                                <option value="Tank Two">Tank Two</option>
+                                                <option value="Tank Three">Tank Three</option>
+                                                <option value="Tank Four">Tank Four</option>
+                                                <option value="Tank Five">Tank Five</option>
+                                            </select>
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label for="laboratory_no">Laboratory No</label>

@@ -15,13 +15,13 @@ const toast = useToast();
 const regions = ref(props.regions ? props.regions : null);
 const districts = ref(props.districts ? props.districts : null);
 const oic = ref(props.oic ? props.oic : null);
-const id = ref(props.data?.id??'');
-const date = ref(props.data?.date??'');
-const region_id = ref(props.data?.region_id??'');
-const district_id = ref(props.data?.district_id??'');
-const oic_id = ref(props.data?.oic_id??'');
-const tank_no = ref(props.data?.tank_no??'');
-const laboratory_no = ref(props.data?.laboratory_no??'');
+const id = ref(props.data?.id ?? '');
+const date = ref(props.data?.date ?? '');
+const region_id = ref(props.data?.region_id ?? '');
+const district_id = ref(props.data?.district_id ?? '');
+const oic_id = ref(props.data?.oic_id ?? '');
+const tank_no = ref(props.data?.tank_no ?? '');
+const laboratory_no = ref(props.data?.laboratory_no ?? '');
 
 const formRef = ref(null);
 const prices = {
@@ -54,12 +54,12 @@ if (props.data && props.data.sample_data && props.data.sample_data.length > 0) {
     samples.value = props.data.sample_data.map(s => {
         const testMap = {};
         s.tests.forEach(t => {
-            testMap[t.test] = true; 
+            testMap[t.test] = true;
         });
 
         const physical = testMap['colour'] && testMap['turbidity'] || false;
         const bacteriological = testMap['coliform'] && testMap['coli'] || false;
-        const chemical = 
+        const chemical =
             testMap['ph'] && testMap['electrical'] && testMap['chloride'] &&
             testMap['alkalinity'] && testMap['nitrate'] && testMap['nitrite'] &&
             testMap['fluoride'] && testMap['phosphate'] && testMap['dissolvedSolid'] &&
@@ -234,7 +234,8 @@ async function handleSubmit() {
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a :href="route('own.resource.sample.index')">NWSDB Water Resource
+                            <li class="breadcrumb-item"><a :href="route('own.resource.sample.index')">NWSDB Water
+                                    Resource
                                     Sample</a>
                             </li>
                             <li class="breadcrumb-item active">NWSDB Water Resource Sample Create</li>
@@ -266,7 +267,7 @@ async function handleSubmit() {
                                                 <select class="form-control" v-model="region_id" required>
                                                     <option value="" disabled selected>Select Region</option>
                                                     <option v-for="region in regions" :key="region.id"
-                                                        :value="region.id" >
+                                                        :value="region.id">
                                                         {{ region.region_code + ' ' + region.region_name }}
                                                     </option>
                                                 </select>
@@ -296,9 +297,15 @@ async function handleSubmit() {
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label for="tank_no">Tack No</label>
-                                            <input type="text" class="form-control" id="tank_no" required
-                                                placeholder="Laboratory No" v-model="tank_no">
+                                            <label for="tank_no">Tank No</label>
+                                            <select class="form-control" id="tank_no" v-model="tank_no" required>
+                                                <option value="">Select Tank</option>
+                                                <option value="Tank One">Tank One</option>
+                                                <option value="Tank Two">Tank Two</option>
+                                                <option value="Tank Three">Tank Three</option>
+                                                <option value="Tank Four">Tank Four</option>
+                                                <option value="Tank Five">Tank Five</option>
+                                            </select>
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label for="laboratory_no">Laboratory No</label>

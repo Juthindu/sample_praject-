@@ -7,7 +7,9 @@ import { store } from '../../../main';
 
 const props = defineProps({
     data: Object,
+    regions: Object,
 });
+const regions = ref(props.regions ? props.regions : null);
 const roles = ref(props.data ? props.data : null);
 const selectedRoleId = ref('')
 const toast = useToast();
@@ -18,6 +20,7 @@ const employee_contact_number = ref('');
 const employee_address = ref('');
 const employee_email = ref('');
 const formRef = ref(null);
+const region_id = ref('');
 
 async function handleSubmit() {
     const form = formRef.value;
@@ -31,6 +34,7 @@ async function handleSubmit() {
     formData.append('first_name', employee_first_name.value);
     formData.append('last_name', employee_last_name.value);
     formData.append('nic', employee_nic.value);
+    formData.append('region_id', region_id.value);
     formData.append('contact_number', employee_contact_number.value);
     formData.append('address', employee_address.value);
     formData.append('email', employee_email.value);
@@ -85,24 +89,24 @@ async function handleSubmit() {
                                                 placeholder="Last Name" v-model="employee_last_name">
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label for="employee_nic">NIC</label>
-                                            <input type="text" class="form-control" id="employee_nic_name" required
-                                                placeholder="NIC" v-model="employee_nic">
-                                        </div>
-                                        <div class="col-md-6 mb-3">
                                             <label for="employee_contact_number">Contact number</label>
                                             <input type="number" class="form-control" id="employee_contact_number"
                                                 required placeholder="Contact Number" v-model="employee_contact_number">
                                         </div>
                                         <div class="col-md-6 mb-3">
-                                            <label for="employee_contact_number">Address</label>
-                                            <input type="text" class="form-control" id="employee_address" required
-                                                placeholder="Address" v-model="employee_address">
-                                        </div>
-                                        <div class="col-md-6 mb-3">
                                             <label for="employee_email">Email</label>
                                             <input type="email" class="form-control" id="employee_address" required
                                                 placeholder="Email address" v-model="employee_email">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="employee_contact_number">Employee ID</label>
+                                            <input type="text" class="form-control" id="employee_address" required
+                                                placeholder="Employee ID" v-model="employee_address">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="employee_nic">Password</label>
+                                            <input type="text" class="form-control" id="employee_nic_name" required
+                                                placeholder="Password" v-model="employee_nic">
                                         </div>
                                         <div class="col-md-6 mb-3">
                                             <label for="employee_email">Role Name</label>
@@ -113,6 +117,18 @@ async function handleSubmit() {
                                                     {{ role.name }}
                                                 </option>
                                             </select>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-group">
+                                                <label for="consumer_id">Region</label>
+                                                <select class="form-control" v-model="region_id" required>
+                                                    <option value="" disabled selected>Select Region</option>
+                                                    <option v-for="region in regions" :key="region.id"
+                                                        :value="region.id">
+                                                        {{ region.region_code + ' ' + region.region_name }}
+                                                    </option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">

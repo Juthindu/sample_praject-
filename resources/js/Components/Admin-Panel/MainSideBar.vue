@@ -23,7 +23,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="userPermissions.includes('Region Management')">
                         <a :href="route('region.index')" class="nav-link"  :class="{ active: route().current('region.*') }">
                             <p>
                                 <svg class="svg" xmlns="http://www.w3.org/2000/svg" height="24px"
@@ -35,7 +35,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="userPermissions.includes('District Management')">
                         <a :href="route('district.index')" class="nav-link" :class="{ active: route().current('district.*') }">
                             <p>
                                 <svg class="svg" xmlns="http://www.w3.org/2000/svg" height="24px"
@@ -47,7 +47,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="userPermissions.includes('OIC Management')">
                         <a :href="route('oic.index')" class="nav-link" :class="{ active: route().current('oic.*') }">
                             <p>
                                 <svg class="svg" xmlns="http://www.w3.org/2000/svg" height="24px"
@@ -59,7 +59,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="userPermissions.includes('Own Resource Water Sample Management')">
                         <a :href="route('own.resource.sample.index')" class="nav-link" :class="{ active: route().current('own.resource.sample.*') }">
                             <p>
                                 <svg class="svg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
@@ -71,7 +71,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="userPermissions.includes('Test Result Management')">
                         <a :href="route('own.sample.data.index')" class="nav-link" :class="{ active: route().current('own.sample.data.*') }">
                             <p>
                                 <svg class="svg" xmlns="http://www.w3.org/2000/svg" height="24px"
@@ -83,7 +83,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="userPermissions.includes('Test Result Management')">
                         <a :href="route('release.own.sample.data.index')" class="nav-link" :class="{ active: route().current('release.own.sample.data.*') }">
                             <p>
                                 <svg class="svg" xmlns="http://www.w3.org/2000/svg" height="24px"
@@ -95,7 +95,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="userPermissions.includes('Send Email Management')">
                         <a :href="route('final.own.sample.data.index')" class="nav-link" :class="{ active: route().current('final.own.sample.data.*') }">
                             <p>
                                 <svg class="svg" xmlns="http://www.w3.org/2000/svg" height="24px"
@@ -107,7 +107,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="userPermissions.includes('Consumer Water Sample Management')">
                         <a :href="route('con.sample.index')" class="nav-link"  :class="{ active: route().current('con.sample.*') }">
                             <p>
                                 <svg class="svg" xmlns="http://www.w3.org/2000/svg" height="24px"
@@ -119,7 +119,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="userPermissions.includes('Consumer Water Sample Management')">
                         <a :href="route('payment.index')" class="nav-link"  :class="{ active: route().current('payment.*') }">
                             <p>
                                 <svg class="svg" xmlns="http://www.w3.org/2000/svg" height="24px"
@@ -131,7 +131,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="userPermissions.includes('Test Result Management')">
                         <a :href="route('consumer.sample.data.test.index')" class="nav-link" :class="{ active: route().current('consumer.sample.data.test.*') }">
                             <p>
                                 <svg class="svg" xmlns="http://www.w3.org/2000/svg" height="24px"
@@ -143,7 +143,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="userPermissions.includes('Consumer Water Sample Management')">
                         <a :href="route('consumer.sample.data.release.index')" class="nav-link" :class="{ active: route().current('consumer.sample.data.release.*') }">
                             <p>
                                 <svg class="svg" xmlns="http://www.w3.org/2000/svg" height="24px"
@@ -155,7 +155,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="userPermissions.includes('Send Email Management')">
                         <a :href="route('consumer.sample.data.final.index')" class="nav-link" :class="{ active: route().current('consumer.sample.data.final.*') }">
                             <p>
                                 <svg class="svg" xmlns="http://www.w3.org/2000/svg" height="24px"
@@ -167,7 +167,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="userPermissions.includes('Consumer Management')">
                         <a :href="route('new.consumer.index')" class="nav-link"  :class="{ active: route().current('new.consumer.*') }">
                             <p>
                                 <svg class="svg" xmlns="http://www.w3.org/2000/svg" height="24px"
@@ -179,7 +179,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="userPermissions.includes('Employee Management')">
                         <a :href="route('employee.index')" class="nav-link"  :class="{ active: route().current('employee.*') }">
                             <svg class="svg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
                                 width="24px" fill="#e3e3e3">
@@ -191,7 +191,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="userPermissions.includes('Chemical Inventory Management')">
                         <a href="#" class="nav-link" :class="{ active: route().current('chemical.*')}">
                             <p>
                                 <svg class="svg" xmlns="http://www.w3.org/2000/svg" height="24px"
@@ -221,7 +221,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="userPermissions.includes('Permission Management')">
                         <a href="#" class="nav-link" :class="{ active: route().current('role.*')}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-2" width="25" height="25"
                                 viewBox="0 0 32 32">

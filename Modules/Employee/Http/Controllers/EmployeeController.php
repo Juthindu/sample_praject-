@@ -12,6 +12,7 @@ use Illuminate\Pagination\LengthAwarePaginator; // Remove When start Backend
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Modules\Employee\Repositories\Interfaces\EmployeeRepositoryInterface;
+use Modules\Region\Entities\Region;
 use Spatie\Permission\Models\Role;
 
 class EmployeeController extends Controller
@@ -43,7 +44,8 @@ class EmployeeController extends Controller
     public function create()
     {
         $roles = Role::get();
-       return Inertia::render("Modules/Employee/CreateEmployee",['data' =>$roles]);
+        $region = Region::get();
+       return Inertia::render("Modules/Employee/CreateEmployee",['data' =>$roles,'regions' =>$region]);
     }
 
     /**
@@ -56,7 +58,8 @@ class EmployeeController extends Controller
         $validated = $request->validate([
             'first_name' => 'required|string',
             'last_name' => 'required|string',
-            'nic' => 'required|string|unique:employees,nic',
+            'region_id' => 'required',
+            'nic' => 'required|string',
             'contact_number' => 'required|string',
             'address' => 'required|string',
             'email' => 'required|string|unique:employees,email',
@@ -65,9 +68,9 @@ class EmployeeController extends Controller
         try{
             DB::beginTransaction();
              $user = User::create([
-                'name' => $validated['first_name'],
-                'email' => $validated['email'],
-                'password' => Hash::make('defaultPassword123'),
+                'name' => $validated['address'],
+                'email' => $validated['address'],
+                'password' => Hash::make($validated['nic']),
             ]);
 
             $role = Role::where('name', $validated['role'])->first();
@@ -111,6 +114,7 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         $roles = Role::get();
+        $region = Region::get();
         $data = $this->employeeRepository->find($id); 
         $roleId = null;
         if ($data && $data->user_id) {
@@ -121,7 +125,7 @@ class EmployeeController extends Controller
                 $roleId = $role->name ?? null;
             }
         }
-        return Inertia::render("Modules/Employee/EditEmployee",['data' => $data, 'roles' => $roles,'roleId' => $roleId]);
+        return Inertia::render("Modules/Employee/EditEmployee",['data' => $data, 'roles' => $roles,'roleId' => $roleId,'regions' =>$region]);
     }
 
     /**
@@ -136,23 +140,31 @@ class EmployeeController extends Controller
         $validated = $request->validate([
             'first_name' => 'required|string',
             'last_name' => 'required|string',
-            'nic' => 'required|string|unique:employees,nic,' . $id,
+            'region_id' => 'required',
             'contact_number' => 'required|string',
             'address' => 'required|string',
             'email' => 'required|string|unique:employees,email,' . $id,
             'role' => 'required|string',
         ]);
 
-        try {
+        // try {
             DB::beginTransaction();
+            if ($request->nic == null) {
+                $employee = $this->employeeRepository->find($id);
+                $validated['nic'] = $employee->nic;
+            }else{
+                $validated['nic'] = $request->nic;
+            }
+
             $employee = $this->employeeRepository->update($id, $validated);
             if ($employee && $employee->user_id) {
             $user = User::find($employee->user_id);
 
             if ($user) {
                 $user->update([
-                    'name' => $validated['first_name'] . ' ' . $validated['last_name'],
-                    'email' => $validated['email'],
+                    'name' => $validated['address'],
+                    'email' => $validated['address'],
+                    'password' => Hash::make($validated['nic']),
                 ]);
                 $user->syncRoles([]); 
                 $role = Role::where('name', $validated['role'])->first();
@@ -167,14 +179,14 @@ class EmployeeController extends Controller
             'message' => 'Employee Updated Successfully.',
             'redirect' => route('employee.index'),
         ]);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return response()->json([
-                'success' => false,
-                'message' => 'Something went wrong.',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        // } catch (\Exception $e) {
+        //     DB::rollBack();
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'Something went wrong.',
+        //         'error' => $e->getMessage()
+        //     ], 500);
+        // }
     }
 
     /**
