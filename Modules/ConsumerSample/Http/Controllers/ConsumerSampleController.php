@@ -506,4 +506,42 @@ class ConsumerSampleController extends Controller
         return response()->json(['message' => 'Results emailed successfully.']);
     }
 
+    public function download($id)
+    {
+        $sample = ConsumerSample::with([
+            'consumer',
+            'sampleData.tests'
+        ])->findOrFail($id);
+
+        $testDetails = [
+            'physical'        => ['name' => 'Physical Quality'],
+            'colour'          => ['name' => 'Colour', 'standard' => 'APHA 2120 C', 'limit' => 15, 'unit' => 'Pt/Co unit'],
+            'turbidity'       => ['name' => 'Turbidity', 'standard' => 'APHA 2130 B', 'limit' => 2, 'unit' => 'NTU'],
+            'ph'              => ['name' => 'pH @25°C', 'standard' => 'A 4500-H B', 'limit' => '6.5 to 8.5', 'unit' => ''],
+            'electrical'      => ['name' => 'Electrical Conductivity', 'standard' => 'APHA 2510 B', 'limit' => '', 'unit' => 'µS/cm'],
+            'chloride'        => ['name' => 'Chloride (as CI)', 'standard' => 'APHA 4500-C1-B', 'limit' => 250, 'unit' => 'mg/L'],
+            'alkalinity'      => ['name' => 'Total Alkalinity (as CaCO3)', 'standard' => 'APHA 2320', 'limit' => 200, 'unit' => 'mg/L'],
+            'nitrate'         => ['name' => 'Nitrate (as NO3-)', 'standard' => 'APHA 4500- NO3- E, Adapted method', 'limit' => 50, 'unit' => 'mg/L'],
+            'nitrite'         => ['name' => 'Nitrite (as NO2)', 'standard' => 'APHA 4500- NO₂- B, Adapted method', 'limit' => 3, 'unit' => 'mg/L'],
+            'fluoride'        => ['name' => 'Fluoride (as F-)', 'standard' => 'APHA 4500-F-D, Adapted method', 'limit' => 1, 'unit' => 'mg/L'],
+            'phosphate'       => ['name' => 'Total phosphate (as PO43-)', 'standard' => 'APHA 3500-P E, Adapted method', 'limit' => 2, 'unit' => 'mg/L'],
+            'dissolvedSolid'  => ['name' => 'Total Dissolved Solid', 'standard' => 'APHA 2540 C', 'limit' => 500, 'unit' => 'mg/L'],
+            'hardness'        => ['name' => 'Total Hardness (as CaCO3)', 'standard' => 'APHA 2340 C', 'limit' => 250, 'unit' => 'mg/L'],
+            'iron'            => ['name' => 'Total Iron', 'standard' => 'APHA 4500- Fe B, Adapted method', 'limit' => 0.3, 'unit' => 'mg/L'],
+            'sulphate'        => ['name' => 'Sulphate (as SO42-)', 'standard' => 'APHA 4500-SO42- E, Adapted method', 'limit' => 250, 'unit' => 'mg/L'],
+            'calcium'         => ['name' => 'Calcium', 'standard' => 'APHA 3500-Ca B', 'limit' => 100, 'unit' => 'mg/L'],
+            'manganese'       => ['name' => 'Manganese', 'standard' => 'APHA 3111 Mn B, Adapted method', 'limit' => 0.1, 'unit' => 'mg/L'],
+            'bacteriological' => ['name' => 'Bacteriological Quality'],
+            'coliform'        => ['name' => 'Total Coliform', 'standard' => 'ISO 9308-1:2014', 'limit' => 10, 'unit' => 'Nos/100mL'],
+            'coli'            => ['name' => 'E.Coli', 'standard' => 'ISO 9308-1:2014', 'limit' => 'Nil', 'unit' => 'Nos/100mL'],
+        ];
+
+        $pdf = Pdf::loadView('pdf.sample_results', [
+        'sample'      => $sample,
+        'testDetails' => $testDetails,
+    ]);
+    $filename = 'Water_Sample_Results_' . ($sample->laboratory_no ?? $sample->id) . '.pdf';
+    return $pdf->download($filename);
+    }
+    
 }

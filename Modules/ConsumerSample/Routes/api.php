@@ -28,7 +28,8 @@ Route::middleware(['web','auth'])->prefix('admin/consumer-sample')->group(functi
     Route::post('/delete',[ConsumerSampleController::class, 'destroy'])->name('con.sample.delete');
     Route::post('/payment',[ConsumerSampleController::class, 'payment'])->name('consumer.samples.payment');
     Route::post('/consumer-samples/send-mail', [ConsumerSampleController::class, 'sendMail'])->name('consumer.Sample.send.email');
-
+    Route::get('/consumer-samples/{id}/pdf', [ConsumerSampleController::class, 'download'])
+     ->name('consumer.samples.pdf');
 });
 
 Route::post('/consumer-sample-data-release', [ConsumerSampleDataController::class, 'fetchReleaseTableData']);

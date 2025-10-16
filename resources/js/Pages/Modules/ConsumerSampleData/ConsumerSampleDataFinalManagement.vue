@@ -62,8 +62,10 @@ onMounted(() => {
                                     table_icon='<i class="nav-icon fas fa-archive" style="font-size: medium;"></i>'
                                     modal_title="Consumer_Sample"
                                     edit_route_name= 'consumer.Sample.send.email'
+                                    result_route_name= 'consumer.Sample.result.download'
                                     use_delete_button=true 
                                     use_mail_button=true 
+                                    use_download_button=true 
                                     use_edit_button=true 
                                 />
                             </div>

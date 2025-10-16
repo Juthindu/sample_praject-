@@ -15,6 +15,7 @@ const props = defineProps<{
     table_icon: string,
     modal_title: string,
     edit_route_name: string,
+    result_route_name: string,
     delete_route_name: string,
     row_action_route_name?: string; // New: Optional route name for an additional row action
     row_action_button_text?: string; // New: Optional button text for the additional row action
@@ -29,6 +30,7 @@ const props = defineProps<{
     use_delete_button?: boolean;
     use_test_button?: boolean;
     use_mail_button?: boolean;
+    use_download_button?: boolean;
 }>();
 const products = ref([]);
 const total = ref(0);
@@ -135,6 +137,28 @@ const sendMail = (row: any) => {
         });
 };
 
+const download = (row: any) => {
+    if (!row || !row.id) {
+        toast.error('Invalid record selected.');
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('id', row.id);
+
+    // Make sure you have props.mail_route_name defined in your component props
+    window.open(route('consumer.samples.pdf', row.id), '_blank');
+        // .then((response) => {
+        //     toast.success(response.data.message || 'Mail sent successfully!');
+        //     // Optionally refresh data
+        //     fetchProducts();
+        // })
+        // .catch((error) => {
+        //     const message = error.response?.data?.message || 'Failed to send mail.';
+        //     toast.error(message);
+        // });
+};
+
 
 const confirmDeleteProduct = (row: any) => {
     modal_data.value = row;
@@ -214,6 +238,7 @@ defineExpose({
                     <button class="btn btn-sm btn-warning mr-2" @click="editProduct(slotProps.value)" v-if="!use_edit_button">Edit</button>
                     <button class="btn btn-sm btn-warning mr-2" @click="editProduct(slotProps.value)" v-if="use_test_button">Result</button>
                     <button class="btn btn-sm btn-primary mr-2" @click="sendMail(slotProps.value)" v-if="use_mail_button">Send Mail</button>
+                    <button class="btn btn-sm btn-danger mr-2" @click="download(slotProps.value)" v-if="use_download_button">Result Download</button>
                     <button class="btn btn-sm btn-danger mr-2"
                         @click="confirmDeleteProduct(slotProps.value)" v-if="!use_delete_button">Delete</button>
                     <!-- <button v-if="slotProps.value" class="btn btn-sm btn-danger mr-2" @click="confirmAddRoute(slotProps.value)">{{ x }}</button> -->
