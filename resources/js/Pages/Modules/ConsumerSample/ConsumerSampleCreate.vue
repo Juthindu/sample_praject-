@@ -1,14 +1,32 @@
 <script setup>
 import AdminLayout from '@/Layouts/Admin/AdminLayout.vue';
 import { Head } from "@inertiajs/vue3";
-import { ref, computed } from 'vue';
+import { ref, computed , watch} from 'vue';
 import { useToast } from 'vue-toastification'
-import { store } from '../../../main';
+import { store, searchChemical } from '../../../main';
 
-const props = defineProps({
-    consumers: Array,
+const props = defineProps({});
+
+const consumers = ref([]);
+const masterConsumers = ref(props.consumers ?? []);
+const showResults = ref(false);
+const suspendSearch = ref(false);
+const search = ref('');
+const address = ref('');
+watch(search, async (newValue) => {
+    if (!newValue) {
+        consumers.value = [];
+        return;
+    }
+    try {
+        const response = await searchChemical(route('consumer.search', { search: newValue }));
+        consumers.value = response.original;
+        console.log(response.original);
+    } catch (e) {
+        console.error('search failed:', e);
+        consumers.value = [];
+    }
 });
-const consumers = ref(props.consumers ? props.consumers : null);
 
 const toast = useToast();
 const date = ref('');
@@ -153,9 +171,15 @@ const balance = computed(() => {
     return (total_payment_amount.value || 0) - (paid_amount.value || 0);
 });
 
-const selected_consumer = computed(() => {
-    return consumers.value.find(c => c.id === selected_consumer_id.value) || null;
-});
+const add = (consumer) => {
+  suspendSearch.value = true;
+  selected_consumer_id.value = consumer.id;
+  search.value = `${consumer.nic} — ${consumer.first_name} ${consumer.last_name}`;
+  showResults.value = false;
+  address.value = consumer.address;
+  consumers.value = [];
+  setTimeout(() => { suspendSearch.value = false; }, 0);
+};
 
 async function handleSubmit() {
     const form = formRef.value;
@@ -240,14 +264,43 @@ async function handleSubmit() {
                                                     placeholder="Date" v-model="date" name="date">
                                             </div>
                                         </div>
-                                        <div class="col-md-3 mb-3">
+<!-- Name / Search (put inside a column; input-group uses BS5 markup) -->
+    <div class="col-md-9 position-relative">
+      <div class="form-group">
+        <label for="search">NIC</label>
+        <div class="input-group w-100">
+          <span class="input-group-text" id="search-key-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 -960 960 960" width="18" fill="currentColor">
+              <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/>
+            </svg>
+          </span>
+          <input id="search" type="text" class="form-control"
+                 placeholder="Search Chemical"   @focus="showResults = true"
+  @input="showResults = true" @blur="hideResults" v-model="search" autocomplete="off" aria-describedby="search-key-icon">
+        </div>
+      </div>
+
+      <!-- dropdown results -->
+      <div v-if="showResults && consumers.length" class="search-result">
+        <ul class="search-list mb-0">
+          <li v-for="consumer in consumers" :key="consumer.id"
+              @click="add(consumer)" class="search-item">
+            {{ consumer.nic }} - {{ consumer.first_name }}  {{consumer.last_name }}
+          </li>
+        </ul>
+      </div>
+      <div v-else-if="showResults && search && !consumers.length" class="search-result">
+        <p class="mb-0 px-2 py-1 text-muted">No consumers found...</p>
+      </div>
+    </div>
+                                        <!-- <div class="col-md-3 mb-3">
                                             <div class="form-group">
                                                 <label for="nic">NIC</label>
                                                 <input type="text" class="form-control" id="nic" placeholder="NIC"
                                                     :value="selected_consumer?.nic || ''" name="nic" disabled>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
+                                        </div> -->
+                                        <!-- <div class="col-md-6 mb-3">
                                             <div class="form-group">
                                                 <label for="consumer_id">Consumers</label>
                                                 <select class="form-control" id="consumer_id" required
@@ -259,12 +312,12 @@ async function handleSubmit() {
                                                     </option>
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="col-md-12 mb-3">
                                             <div class="form-group">
                                                 <label for="address">Address</label>
                                                 <input type="text" class="form-control" id="address"
-                                                    placeholder="Address" :value="selected_consumer?.address || ''"
+                                                    placeholder="Address" v-model='address'
                                                     name="address" disabled>
                                             </div>
                                         </div>
@@ -613,4 +666,56 @@ canvas {
     /* make checkbox 1.5x bigger */
     margin-right: 10px;
 }
+
+/* Ensure the input-group renders borders even if something overrides them */
+:deep(.input-group .input-group-text){
+  border: 1px solid var(--bs-border-color, #ced4da);
+  background: #f8f9fa;
+}
+:deep(.input-group .form-control){
+  border: 1px solid var(--bs-border-color, #ced4da);
+  border-left: 0; /* avoid double border next to the addon */
+}
+
+/* Dropdown look */
+:deep(.search-result){
+  position: absolute;
+  left: 0; right: 0;
+  top: calc(100% + .25rem);
+  max-height: 220px;
+  overflow: auto;
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: .25rem;
+  z-index: 1050;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+:deep(.search-list){ list-style: none; padding-left: 0; margin: 0; }
+:deep(.search-item){ padding: .5rem .75rem; cursor: pointer; }
+:deep(.search-item:hover){ background: #f8f9fa; }
+
+/* If <style scoped>, keep :deep(...) . If not scoped, remove :deep(). */
+:deep(.input-group .input-group-text){
+  background: #f8f9fa;
+  border: 1px solid var(--bs-border-color, #ced4da) !important;
+  border-right: 0 !important;     /* so there isn't a double line between addon and input */
+}
+
+:deep(.input-group .form-control){
+  border: 1px solid var(--bs-border-color, #ced4da) !important;
+  border-left: 0 !important;      /* pairs with the addon’s right border */
+  box-shadow: none !important;     /* avoid glow overriding */
+}
+
+/* Optional: keep corners nice when grouped */
+:deep(.input-group > .input-group-text:first-child){
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+:deep(.input-group > .form-control:last-child){
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+
 </style>

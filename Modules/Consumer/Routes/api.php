@@ -24,5 +24,6 @@ Route::middleware(['web','auth'])->prefix('admin/consumer')->group(function() {
     Route::post('/update',[ConsumerController::class, 'update'])->name('new.consumer.update');
     Route::post('/delete',[ConsumerController::class, 'destroy'])->name('new.consumer.delete');
     Route::get('/export',[ConsumerController::class, 'export'])->name('new.consumer.export');
+    Route::get('/search',[ConsumerController::class,'search'])->name('consumer.search');
 
 });

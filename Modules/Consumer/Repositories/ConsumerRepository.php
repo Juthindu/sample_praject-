@@ -14,5 +14,12 @@ class ConsumerRepository implements ConsumerRepositoryInterface{
     {
         $this->model = $consumer;
     }
+
+    public function search($request)
+    {
+        $search = $request->input('search');
+        $results = $this->model->where('nic', 'like', "%{$search}%")->orWhere('first_name', 'like', "%{$search}%")->orWhere('last_name', 'like', "%{$search}%")->get();
+        return $results;
+    }
 }
 ?>

@@ -149,4 +149,14 @@ class ConsumerController extends Controller
             ], 500);
         }
     }
+
+        public function search(Request $request)
+    {
+        $results = response()->json($this->consumerRepository->search($request));
+
+        if ($results->isEmpty()) {
+            return response()->json(['error' => 'No matching chemical found'], 404);
+        }
+        return response()->json($results);
+    }
 }
