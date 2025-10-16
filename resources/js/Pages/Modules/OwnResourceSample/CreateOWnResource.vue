@@ -17,7 +17,7 @@ const oic_id = ref('');
 const districts = ref([]);
 const oic = ref([]);
 const tank_no = ref('');
-const laboratory_no = ref('Region LAB');
+const laboratory_no = ref('Regional LAB');
 
 // const total_payment_amount = ref(0);
 const formRef = ref(null);

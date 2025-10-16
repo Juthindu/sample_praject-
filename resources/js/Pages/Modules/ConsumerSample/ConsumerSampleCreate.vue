@@ -33,7 +33,7 @@ const date = ref('');
 const selected_consumer_id = ref('');
 const transport = ref(0);
 const vat = ref(0);
-const laboratory_no = ref('Region LAB');
+const laboratory_no = ref('Regional LAB');
 const paid_amount = ref(0);
 const payment_status = ref("payment_status");
 
