@@ -17,6 +17,9 @@
 <body>
 
   <!-- New top titles -->
+  <div class="brand-logo">
+    <img src="/images/Aqua-mission/Login page logo.jpg" alt="" style="height: 80px">
+  </div>
   <h1 class="center">National Water Supply and Drainage Board</h1>
   <h2 class="center">Water Sample Test Results</h2>
 
