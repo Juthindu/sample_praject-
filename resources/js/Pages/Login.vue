@@ -26,7 +26,7 @@ const form = useForm({
 });
 
 const handleLogin = () => {
-    form.post(route('admin.login'),{
+    form.post(route('admin.login'), {
         onSuccess: () => {
             useToast().success('Login successful');
         },
@@ -35,6 +35,7 @@ const handleLogin = () => {
         },
     })
 }
+const currentYear = new Date().getFullYear();
 </script>
 
 <template>
@@ -68,39 +69,62 @@ const handleLogin = () => {
             </template>
 </div> -->
 
-    <div class="register-page" style="min-height: 542px;">
-        <div class="register-box">
-            <div class="card card-outline card-primary">
-                <div class="row">
-                    <div class="col-12 p-3 d-flex justify-content-center align-items-center">
-                        <img src="/images/Admin-panel/panel-logo.png" alt="logo" class="" style="opacity: 1" width="200px"
-                        >
+    <div class="screen">
+        <div class="screen2">
+            <div class="card-bg">
+                <div class="register-page " style="min-height: 542px;">
+                    <div class="register-box" style="width: 400px;">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-12 d-flex justify-content-center align-items-center">
+                                        <img src="/images/Aqua-mission/Login page logo-2.png" alt="logo" class=""
+                                            style="opacity: 1" width="100px">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body mt-5">
+                                <form @submit.prevent="handleLogin">
+                                    <div class="form-group mb-3 px-3">
+
+                                        <label for="" class="form-label p-1"><span class="fas fa-user"></span> User name
+                                            /
+                                            User
+                                            mail</label>
+                                        <input type="email" class="form-control" placeholder="Email"
+                                            v-model="form.email">
+                                        <!-- <div class="input-group-append">
+                                <div class="input-group-text">
+                                </div>
+                            </div> -->
+                                    </div>
+                                    <div class="form-group px-3 mb-3">
+                                        <label for="" class="form-label p-1"><span class="fas fa-lock"></span>
+                                            Password</label>
+                                        <input type="password" class="form-control" placeholder="Password"
+                                            v-model="form.password">
+                                        <!-- <div class="input-group-append">
+                                <div class="input-group-text">
+
+                                </div>
+                            </div> -->
+                                    </div>
+                                    <div class="row d-flex justify-content-end px-3 mt-4">
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary btn-block">Login</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer mt-5 d-flex justify-content-center align-items-center bg-light">
+                                <small class="text-muted text-center py-2">
+                                    &copy; <span id="currentYear">{{ currentYear }}</span> Aqua Mission. All rights
+                                    reserved.
+                                </small>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
-                <div class="card-body">
-                    <form @submit.prevent="handleLogin">
-                        <div class="input-group mb-3">
-                            <input type="email" class="form-control" placeholder="Email" v-model="form.email">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-envelope"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="input-group mb-3">
-                            <input type="password" class="form-control" placeholder="Password" v-model="form.password">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-lock"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row d-flex justify-content-end">
-                            <div class="col-4">
-                                <button type="submit" class="btn btn-primary btn-block">Login</button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -108,7 +132,61 @@ const handleLogin = () => {
 </template>
 
 <style scoped>
-.company-name{
+.company-name {
     font-weight: bolder;
+}
+
+.card-bg {
+    /* background: linear-gradient(to right, #000000, #1e3a8a, #000000); */
+
+}
+.card-header,.card-footer{
+    background: #e9f1fe !important;
+}
+.register-page {
+    background: transparent;
+}
+
+.register-box {
+    position: relative;
+    z-index: 99;
+}
+/* --bg-- */
+.screen2 {
+    position: relative;
+    background: radial-gradient(ellipse at center,
+            rgba(0, 33, 82, 1) 0%,
+            rgba(0, 0, 0, 1) 100%);
+
+}
+
+.card-bg:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(45deg,
+            transparent,
+            transparent 1px,
+            rgba(0, 0, 0, .8) 10px,
+            rgba(255, 255, 255, 1) 10px);
+    z-index: 1;
+}
+
+.screens {
+    margin: 0;
+    padding: 0;
+}
+
+.screens>.screen {
+    position: relative;
+    border-bottom: 1px solid black;
+    width: 100vw;
+    height: 100vh;
+    list-style-type: none;
+    display: block;
 }
 </style>

@@ -125,17 +125,7 @@ const testDetails = {
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 mt-3 mb-3">
-                                            <div class="form-group">
-                                                <label for="testing_status">Sample Testing Status</label>
-                                                <select class="form-control" id="testing_status" required
-                                                    v-model="testing_status">
-                                                    <option value="" selected>Select Testing Status</option>
-                                                    <option value="Completed">Completed</option>
-                                                    <option value="Ongoing">Ongoing</option>
-                                                </select>
-                                            </div>
-                                        </div>
+
                                         <div class="col-12">
                                             <div v-if="selectedSample">
                                                 <h5 class="mt-4 mb-3 text-bold">Tests & Results</h5>
@@ -168,9 +158,22 @@ const testDetails = {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 d-flex justify-content-between mt-3">
+                                   <div class="row">
+                                     <div class="col-md-6 mt-3 mb-3">
+                                            <div class="form-group">
+                                                <label for="testing_status">Sample Testing Status</label>
+                                                <select class="form-control" id="testing_status" required
+                                                    v-model="testing_status">
+                                                    <option value="" selected>Select Testing Status</option>
+                                                    <option value="Completed">Completed</option>
+                                                    <option value="Ongoing">Ongoing</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    <div class="col-md-12 mt-3 align-content-end text-right">
                                         <button class="btn btn-success" type="submit">Save Results</button>
                                     </div>
+                                   </div>
                                 </form>
                             </div>
                         </div>
