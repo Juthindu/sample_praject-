@@ -91,7 +91,7 @@ const currentYear = new Date().getFullYear();
                                             /
                                             User
                                             mail</label>
-                                        <input type="email" class="form-control" placeholder="Email"
+                                        <input type="text" class="form-control" placeholder="Email"
                                             v-model="form.email">
                                         <!-- <div class="input-group-append">
                                 <div class="input-group-text">
